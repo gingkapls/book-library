@@ -42,6 +42,11 @@ Book.prototype.info = function () {
   };
 };
 
+Book.prototype.toggleRead = function () {
+  this.read = !this.read;
+  return this.read;
+};
+
 const myLibrary = [
   new Book("The Hobbit", "J.R.R Tolkien", 296, true),
   new Book("The Rabbit", "R.R Man", 392, false),
@@ -99,7 +104,7 @@ const createCard = (book, id) => {
       checkbox.addEventListener("change", () => {
         // console.log(`toggling status of book ${id}`);
         // console.log(`before: ${myLibrary[id].read}`);
-        myLibrary[id].read = !myLibrary[id].read;
+        myLibrary[id].toggleRead();
         // console.log(`after: ${myLibrary[id].read}`);
       });
 
