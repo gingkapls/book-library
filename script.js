@@ -21,24 +21,24 @@ const colorPalette = [
 const generateRandomColor = () =>
   colorPalette.at(Math.floor(Math.random() * colorPalette.length));
 
-function Book(title, author, pages, isRead = false) {
+function Book(title, author, pages, read = false) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.isRead = isRead;
+  this.read = read;
   this.color = generateRandomColor();
 }
 
 Book.prototype.info = function () {
   // return `${this.title} by ${this.author}, ${this.pages} pages, ${
-  // this.isRead ? "read" : "not read yet"
+  // this.read ? "read" : "not read yet"
   // }`;
 
   return {
     title: this.title,
     author: this.author,
     pages: this.pages,
-    isRead: this.isRead,
+    read: this.read,
   };
 };
 
@@ -67,16 +67,14 @@ const createCard = (book, id) => {
   btnDelete.textContent = "x";
   btnDelete.addEventListener("click", (event) => {
     if (!confirm("Do you want to delete this book?")) return;
-
-    const index = event.target.parentNode.dataset.id;
-    myLibrary.splice(index, 1);
+    myLibrary.splice(id, 1);
     renderLibrary();
-    console.log(`deleted book ${index}`);
+    console.log(`deleted book ${id}`);
   });
 
   div.appendChild(btnDelete);
 
-  let tr, td;
+  let tr, td, checkbox;
   div.classList.add("card");
 
   for (const key in book.info()) {
@@ -88,7 +86,26 @@ const createCard = (book, id) => {
 
     // Category values
     td = document.createElement("td");
-    td.textContent = book[key];
+    if (key === "read") {
+      checkbox = document.createElement("input");
+      checkbox.setAttribute("type", "checkbox");
+
+      const stateCheckbox =
+        myLibrary[id].read === true ? "checked" : "unchecked";
+
+      checkbox.setAttribute(stateCheckbox, stateCheckbox);
+
+      checkbox.addEventListener("change", () => {
+        // console.log(`toggling status of book ${id}`);
+        // console.log(`before: ${myLibrary[id].read}`);
+        myLibrary[id].read = !myLibrary[id].read;
+        // console.log(`after: ${myLibrary[id].read}`);
+      });
+
+      td.appendChild(checkbox);
+    } else {
+      td.textContent = book[key];
+    }
     tr.appendChild(td);
     tbody.appendChild(tr);
   }
@@ -128,7 +145,7 @@ const addToLibrary = (event) => {
     (title = newFormData.get("bookTitle")),
     (author = newFormData.get("bookAuthor")),
     (pages = newFormData.get("bookPages")),
-    (isRead = newFormData.get("bookIsRead") === "true" ? true : false)
+    (read = newFormData.get("bookIsRead") === "true" ? true : false)
   );
   myLibrary.push(newBook);
   form.reset();
