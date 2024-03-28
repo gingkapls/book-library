@@ -56,7 +56,9 @@ const myLibrary = [
 const createCard = (book, id) => {
   const div = document.createElement("div");
   div.dataset.id = id;
+  div.classList.add("card");
   div.style.backgroundColor = book.color;
+
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
   table.appendChild(tbody);
@@ -75,7 +77,6 @@ const createCard = (book, id) => {
   div.appendChild(btnDelete);
 
   let tr, td, checkbox;
-  div.classList.add("card");
 
   for (const key in book.info()) {
     // Category names
