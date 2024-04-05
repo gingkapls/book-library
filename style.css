@@ -44,12 +44,13 @@ body {
 
 .card {
   padding: 10px 5px;
-  min-width: 280px;
+  width: clamp(300px, 30%, 400px);
   background: white;
   display: inline-flex;
   border: 2px solid black;
   box-shadow: 2px 2px 5px 1px grey;
   border-radius: 8px;
+  justify-content: space-between;
 }
 
 .card table {
@@ -89,7 +90,7 @@ body {
   flex: 0;
   height: 3ch;
   padding: 0px 8px;
-  margin: 5px;
+  margin: 5px 20px;
 }
 
 .btn-close.btn-delete-book {
