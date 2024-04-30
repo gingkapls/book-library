@@ -12,7 +12,7 @@
     <div id="main-container">
       <dialog id="dialog-add-book">
         <button class="btn-close" id="btn-close-dialog">x</button>
-        <form action="#" id="form-book-add">
+        <form action="#" id="form-book-add" novalidate>
           <div>
             <label for="title">Title: </label>
             <label for="author">Author: </label>
@@ -23,13 +23,13 @@
           <div>
             <input id="title" type="text" name="bookTitle" required />
             <input id="author" type="text" name="bookAuthor" required />
-            <input id="pages" type="text" name="bookPages" />
+            <input id="pages" type="number" name="bookPages" min="1" required />
             <div>
               <input
                 id="isRead"
                 type="checkbox"
                 name="bookIsRead"
-                value="true"
+                value="false"
               />
             </div>
             <button type="submit" id="btn-book-add" class="btn-add">Add</button>
